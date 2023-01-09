@@ -1,40 +1,74 @@
 #include "sort.h"
+int partition(int *array, int lower, int higher, size_t size);
+void quick_sort_recursion(int *array, int lower, int higher, size_t size);
+/**
+ * quick_sort -  sorts an array of integers in ascending order using the
+ * Quick sort algorithm
+ * @array: Array of integers to be sorted
+ * @size: Size of the array
+ * Return: void function
+ */
 void quick_sort(int *array, size_t size)
 {
-    int start = 0;
-    int end = size - 1;
-
-    if (start < end)
-    {
-        int pivot = partition(array, start, end);
-        quick_sort(array, pivot);
-        quick_sort(array + pivot + 1, size - 1 - pivot);
-    }
+	if (!array || size < 2)
+		return;
+	quick_sort_rec(array, 0, size - 1, size);
 }
-
-int partition(int *array, int start, int end)
+/**
+ * quick_sort_recursion - recursive function to sort an array of integers
+ * in ascending order using the Quick sort algorithm
+ * @array: Array of integers to be sorted
+ * @lower: lower index of the array
+ * @higher: higher index of the array
+ * @size: size of the array
+ * Return: void function
+ */
+void quick_sort_recursion(int *array, int lower, int higher, size_t size)
 {
-    int pivot = array[end];
-    int i = start;
+	int l_p = 0;
 
-    for (int j = start; j < end; j++)
-    {
-        if (array[j] < pivot)
-        {
-            swap(&array[i], &array[j]);
-            printf("Swapped elements: [ %d, %d ]\n", array[i], array[j]);
-            i++;
-        }
-    }
-    swap(&array[i], &array[end]);
-    printf("Swapped elements: [ %d, %d ]\n", array[i], array[end]);
-
-    return i;
+	if (lower < higher)
+	{
+		l_p = lomuto_partition(array, lower, higher, size);
+		quick_sort_rec(array, lower, l_p - 1, size);
+		quick_sort_rec(array, l_p + 1, higher, size);
+	}
 }
-
-void swap(int *a, int *b)
+/**
+ * partition - partition the array and return the pivot index
+ * @array: Array of integers to be sorted
+ * @lower: lower index of the array
+ * @higher: higher index of the array
+ * @size: size of the array
+ * Return: void function
+ */
+int partition(int *array, int lower, int higher, size_t size)
 {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+	int i = 0, j = 0, pivot = 0, aux = 0;
+
+	pivot = array[higher];
+	i = lower;
+
+	for (j = lower; j < higher; ++j)
+	{
+		if (array[j] < pivot)
+		{
+			if (array[i] != array[j])
+			{
+				aux = array[i];
+				array[i] = array[j];
+				array[j] = aux;
+				print_array(array, size);
+			}
+			++i;
+		}
+	}
+	if (array[i] != array[higher])
+	{
+		aux = array[i];
+		array[i] = array[higher];
+		array[higher] = aux;
+		print_array(array, size);
+	}
+	return (i);
 }
