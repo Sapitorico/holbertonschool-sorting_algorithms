@@ -29,7 +29,7 @@ void quick_sort_recursion(int *array, int lower, int higher, size_t size)
 
 	if (lower < higher)
 	{
-		l_p = lomuto_partition(array, lower, higher, size);
+		l_p = partition(array, lower, higher, size);
 		quick_sort_recursion(array, lower, l_p - 1, size);
 		quick_sort_recursion(array, l_p + 1, higher, size);
 	}
