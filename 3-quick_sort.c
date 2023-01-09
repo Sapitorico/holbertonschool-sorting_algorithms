@@ -12,7 +12,7 @@ void quick_sort(int *array, size_t size)
 {
 	if (!array || size < 2)
 		return;
-	quick_sort_rec(array, 0, size - 1, size);
+	quick_sort_recursion(array, 0, size - 1, size);
 }
 /**
  * quick_sort_recursion - recursive function to sort an array of integers
@@ -30,8 +30,8 @@ void quick_sort_recursion(int *array, int lower, int higher, size_t size)
 	if (lower < higher)
 	{
 		l_p = lomuto_partition(array, lower, higher, size);
-		quick_sort_rec(array, lower, l_p - 1, size);
-		quick_sort_rec(array, l_p + 1, higher, size);
+		quick_sort_recursion(array, lower, l_p - 1, size);
+		quick_sort_recursion(array, l_p + 1, higher, size);
 	}
 }
 /**
